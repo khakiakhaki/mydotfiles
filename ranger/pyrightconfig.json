@@ -1,0 +1,19 @@
+{
+  "include": [
+    "src"
+  ],
+  
+
+
+  "stubPath": "/usr/local/lib/python3.8/dist-packages/",
+
+
+  "reportMissingImports": true,
+  "reportMissingTypeStubs": false,
+
+  "pythonVersion": "3.8",
+  "pythonPlatform": "Linux",
+
+  ]
+}
+
