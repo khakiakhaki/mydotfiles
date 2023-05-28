@@ -1,5 +1,4 @@
-
-require("wovim").setup({})
+require("akvim").setup({})
 -- require("insis").setup({
 --   clangd = {
 --     enable = true,
