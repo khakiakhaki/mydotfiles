@@ -46,6 +46,18 @@ lvim.plugins = {
     'mbbill/undotree',
     cmd = { "UndotreeToggle", "UndotreeFocus", "UndotreeShow" },
   },
+  {
+    "LintaoAmons/easy-commands.nvim",
+    config = function()
+      require("easy-commands").Setup({
+        ["RunSelectedAndOutputWithPrePostFix"] = {
+          prefix = "```",
+          postfix = "```"
+        }
+      })
+    end,
+    cmd = 'RunSelectedAndOutputWithPrePostFix'
+  }
 }
 
 lvim.keys.normal_mode["<leader>ra"] = "<CMD>Ranger<CR>"
@@ -53,6 +65,7 @@ lvim.keys.normal_mode["<leader>ra"] = "<CMD>Ranger<CR>"
 ---plugin keymap
 
 lvim.keys.normal_mode['<leader>ra'] = { "<cmd>Ranger<cr>" }
+lvim.keys.visual_mode['<leader>rc'] = { "<cmd>RunSelectedAndOutputWithPrePostFix<cr>" }
 lvim.builtin.which_key.mappings["f"] = {}
 lvim.keys.normal_mode["<leader>ff"] = { "<CMD>Telescope find_files<CR>" }
 lvim.keys.normal_mode["<leader>fo"] = { "<CMD>Telescope oldfiles<CR>" }

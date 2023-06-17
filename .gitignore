@@ -3,4 +3,4 @@
 /wslu
 /configstore
 /ranger/plugins/_pycache_
-
+/ranger/plugins/__pycache__
