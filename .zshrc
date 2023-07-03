@@ -123,6 +123,7 @@ alias vim='lvim'
 alias vi='lvim'
 alias ra='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 alias lf='$HOME/apps/lf/lf'
+alias openhere='explorer.exe .' 
 #alias python='python3'
 
 # -----------------auto suggestions-
