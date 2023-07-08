@@ -4,3 +4,5 @@
 /configstore
 /ranger/plugins/_pycache_
 /ranger/plugins/__pycache__
+/gh/hosts.yma
+gh/hosts.yml

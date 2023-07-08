@@ -4,14 +4,15 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-export PATH=/home/atmosu/.local/bin:~/CWP/44R26/bin:~/RSFSRC/build/cumtb/build:$PATH
+export PATH=/home/atmosu/.local/bin:~/CWP/44R26/bin:$PATH
 export PATH=/home/atmosu/RSFSRC/user/cumtb/build:~/CWP/44R26/bin:$PATH
-source ~/RSFSRC/env.sh 
+source /home/atmosu/RSFSRC/env.sh 
 
 #export DISPLAY=`cat /etc/resolv.conf | grep nameserver | awk '{print $2}'`:0
 export CWPROOT=~/CWP/44R26
 export CBLASROOT=/home/atmosu/temp/lapack-3.10.1/CBLAS/include/
-
+export LIBRARY_PATH=$LIBRARY_PATH:/home/atmosu/temp/lapack-3.10.1:/home/atmosu/RSFROOT/
+export C_INCLUDE_PATH=$C_INCLUDE_PATH:/home/atmosu/temp/lapack-3.10.1/LAPACKE/include:/home/atmosu/temp/lapack-3.10.1/CBLAS/include:/home/atmosu/RSFROOT/include
 
 
 
@@ -124,6 +125,7 @@ alias vi='lvim'
 alias ra='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 alias lf='$HOME/apps/lf/lf'
 alias openhere='explorer.exe .' 
+alias zz='z -' 
 #alias python='python3'
 
 # -----------------auto suggestions-
@@ -164,6 +166,13 @@ bindkey '^H' __smart_backward
 eval "$(zoxide init zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export LD_LIBRARY_PATH=/home/atmosu/temp/
+
+# Path for shared object files
+if [ -n "$LD_LIBRARY_PATH" ]; then
+export LD_LIBRARY_PATH=/home/atmosu/temp/:${LD_LIBRARY_PATH}
+else
+export LD_LIBRARY_PATH=/home/atmosu/temp
+fi
+
 export PYTHONPATH=/home/atmosu/RSFSRC/book/Recipes:$PYTHONPATH
 source "$HOME/.cargo/env"
