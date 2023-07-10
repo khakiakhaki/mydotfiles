@@ -126,6 +126,8 @@ alias ra='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; c
 alias lf='$HOME/apps/lf/lf'
 alias openhere='explorer.exe .' 
 alias zz='z -' 
+alias lg='lazygit' 
+
 #alias python='python3'
 
 # -----------------auto suggestions-
