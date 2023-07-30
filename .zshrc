@@ -13,6 +13,12 @@ export CWPROOT=~/CWP/44R26
 export CBLASROOT=/home/atmosu/temp/lapack-3.10.1/CBLAS/include/
 export LIBRARY_PATH=$LIBRARY_PATH:/home/atmosu/temp/lapack-3.10.1:/home/atmosu/RSFROOT/
 export C_INCLUDE_PATH=$C_INCLUDE_PATH:/home/atmosu/temp/lapack-3.10.1/LAPACKE/include:/home/atmosu/temp/lapack-3.10.1/CBLAS/include:/home/atmosu/RSFROOT/include
+export CPLUS_INCLUDE_PATH=$C_INCLUDE_PATH
+# if [ -n "$C_INCLUDE_PATH" ]; then
+# export C_INCLUDE_PATH=$C_INCLUDE_PATH:/home/atmosu/temp/lapack-3.10.1/LAPACKE/include:/home/atmosu/temp/lapack-3.10.1/CBLAS/include:/home/atmosu/RSFROOT/include
+# else
+# export C_INCLUDE_PATH=/home/atmosu/temp/lapack-3.10.1/LAPACKE/include:/home/atmosu/temp/lapack-3.10.1/CBLAS/include:/home/atmosu/RSFROOT/include
+# fi
 
 
 
@@ -124,7 +130,7 @@ alias vim='lvim'
 alias vi='lvim'
 alias ra='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 alias lf='$HOME/apps/lf/lf'
-alias openhere='explorer.exe .' 
+alias oh='explorer.exe .' 
 alias zz='z -' 
 alias lg='lazygit' 
 
