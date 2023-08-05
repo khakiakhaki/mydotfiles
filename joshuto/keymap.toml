@@ -96,24 +96,24 @@ keymap = [
 	{ keys = [ ";" ],		command = ":" },
 
 	{ keys = [ "'" ],		command = ":shell " },
-	{ keys = [ "m", "k" ],		command = ":mkdir " },
-	{ keys = [ "c", "w" ],		command = ":rename " },
+	{ keys = [ "S" ],		command = "shell zsh" },
+	{ keys = [ "ctrl+g" ],		command = "shell lazygit" },
+	{ keys = [ "M" ],		command = ":mkdir " },
 
 	{ keys = [ "/" ],		command = ":search " },
 	{ keys = [ "|" ],		command = ":search_inc " },
 	{ keys = [ "\\" ],		command = ":search_glob " },
-	{ keys = [ "S" ],		command = "search_fzf" },
-	{ keys = [ "C" ],		command = "subdir_fzf" },
+	{ keys = [ "ctrl+p" ],		command = "subdir_fzf" },
 
 	{ keys = [ "n" ],		command = "search_next" },
 	{ keys = [ "N" ],		command = "search_prev" },
 
-	{ keys = [ "s", "r" ],		command = "sort reverse" },
-	{ keys = [ "s", "l" ],		command = "sort lexical" },
-	{ keys = [ "s", "m" ],		command = "sort mtime" },
-	{ keys = [ "s", "n" ],		command = "sort natural" },
-	{ keys = [ "s", "s" ],		command = "sort size" },
-	{ keys = [ "s", "e" ],		command = "sort ext" },
+	{ keys = [ "o", "r" ],		command = "sort reverse" },
+	{ keys = [ "o", "l" ],		command = "sort lexical" },
+	{ keys = [ "o", "m" ],		command = "sort mtime" },
+	{ keys = [ "o", "n" ],		command = "sort natural" },
+	{ keys = [ "o", "s" ],		command = "sort size" },
+	{ keys = [ "o", "e" ],		command = "sort ext" },
 
 	{ keys = [ "m", "s" ],		command = "linemode size" },
 	{ keys = [ "m", "m" ],		command = "linemode mtime" },
@@ -125,6 +125,8 @@ keymap = [
 	{ keys = [ "g", "e" ],		command = "cd /etc" },
 	{ keys = [ "g", "h" ],		command = "cd ~/" },
 	{ keys = [ "g", "w" ],		command = "cd /mnt/d/vmashine" },
+
+	{ keys = [ "g", "b" ],		command = "cd /usr/bin" },
 	{ keys = [ "?" ],		command = "help" }
 ]
 

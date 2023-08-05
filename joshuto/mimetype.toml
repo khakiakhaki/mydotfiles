@@ -18,10 +18,9 @@ video_default	= [
 ]
 
 text_default	= [
-	{ command = "lvim", fork = true, silent = true },
-  { command = "nvim", fork = true, silent = true },
+	{ command = "lvim" },
+	{ command = "nvim" },
 	{ command = "bat", args = [ "--paging=always" ] },
-	{ command = "micro" },
 ]
 
 reader_default	= [
