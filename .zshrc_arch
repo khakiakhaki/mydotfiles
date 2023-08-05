@@ -4,6 +4,24 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 source "${ZINIT_HOME}/zinit.zsh"
 
 
+# history 
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000000
+SAVEHIST=10000000
+setopt BANG_HIST                 # Treat the '!' character specially during expansion.
+setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
+setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
+setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
+setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
+setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
+setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
+setopt HIST_BEEP                 # Beep when accessing nonexistent history.
+bindkey '^[[3~' delete-char
 
 # Path to your oh-my-zsh installation.
 #
@@ -11,7 +29,6 @@ export PATH=/home/akawcc/.local/bin:~/CWP/44R26/bin:$PATH
 export PATH=/home/akawcc/RSFSRC/user/cumtb/build:~/CWP/44R26/bin:$PATH
 source /home/akawcc/RSFSRC/env.sh 
 
-#export DISPLAY=`cat /etc/resolv.conf | grep nameserver | awk '{print $2}'`:0
 export CWPROOT=~/CWP/44R26
 # export CBLASROOT=/home/akawcc/temp/lapack-3.10.1/CBLAS/include/
 # export LIBRARY_PATH=$LIBRARY_PATH:/home/akawcc/temp/lapack-3.10.1:/home/atmosu/RSFROOT/
@@ -23,11 +40,14 @@ export fzf_preview_cmd='[[ $(file --mime {}) =~ binary ]] && echo {} is a binary
 export FZF_COMPLETION_TRIGGER='\'
 # Add wisely, as too many plugins slow down shell startup.
 #
-zinit light zsh-users/zsh-syntax-highlighting
+# zinit light zsh-users/zsh-syntax-highlighting
+
+zinit light zdharma-continuum/history-search-multi-word
+zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 
-
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 #------------theme
 zinit snippet OMZL::git.zsh

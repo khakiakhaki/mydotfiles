@@ -13,7 +13,7 @@ function my_git_prompt_info() {
 # PROMPT='%{$fg_bold[green]%}%n@%m%{$reset_color%} %{$fg_bold[blue]%}%2~%{$reset_color%} $(my_git_prompt_info)%{$reset_color%}%B»%b '
 # PROMPT=$'%{$fg_bold[blue]%}%2~%{$reset_color%} $(my_git_prompt_info)%{$reset_color%}%B\n » %b'
 # PROMPT='$(my_git_prompt_info)%{$reset_color%}%B » %b'
-PROMPT=" %{$fg_bold[blue]%}%0~%{$reset_color%} $(my_git_prompt_info)%{$reset_color%}%B» %b"
+PROMPT=" %{$fg_bold[blue]%}%1~%{$reset_color%} $(my_git_prompt_info)%{$reset_color%}%B» %b"
 # RPS1="${return_code}"
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[yellow]%}("
@@ -25,3 +25,22 @@ ZSH_THEME_GIT_PROMPT_RENAMED="~"
 ZSH_THEME_GIT_PROMPT_DELETED="!"
 ZSH_THEME_GIT_PROMPT_UNMERGED="?"
 
+function preexec() {
+  timer=${timer:-$SECONDS}
+}
+
+function precmd() {
+  if [ $timer ]; then
+    timer_show=$(($SECONDS - $timer))
+    if [[ $timer_show -ge $min_show_time ]]; then
+      RPROMPT="%{$fg_bold[red]%}(${timer_show}s)%f%{$fg_bold[white]%}[%T]%f %{$reset_color%}%"
+    else
+      RPROMPT="%{$fg_bold[white]%}[%T]%f"
+    fi
+    unset timer
+  fi
+}
+
+autoload -Uz add-zsh-hook
+add-zsh-hook preexec preexec
+add-zsh-hook precmd precmd
