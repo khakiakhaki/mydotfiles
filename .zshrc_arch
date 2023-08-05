@@ -1,0 +1,123 @@
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
+
+
+
+# Path to your oh-my-zsh installation.
+#
+export PATH=/home/akawcc/.local/bin:~/CWP/44R26/bin:$PATH
+export PATH=/home/akawcc/RSFSRC/user/cumtb/build:~/CWP/44R26/bin:$PATH
+source /home/akawcc/RSFSRC/env.sh 
+
+#export DISPLAY=`cat /etc/resolv.conf | grep nameserver | awk '{print $2}'`:0
+export CWPROOT=~/CWP/44R26
+# export CBLASROOT=/home/akawcc/temp/lapack-3.10.1/CBLAS/include/
+# export LIBRARY_PATH=$LIBRARY_PATH:/home/akawcc/temp/lapack-3.10.1:/home/atmosu/RSFROOT/
+# export C_INCLUDE_PATH=$C_INCLUDE_PATH:/home/akawcc/temp/lapack-3.10.1/LAPACKE/include:/home/atmosu/temp/lapack-3.10.1/CBLAS/include:/home/atmosu/RSFROOT/include
+# export CPLUS_INCLUDE_PATH=$C_INCLUDE_PATH
+
+
+export fzf_preview_cmd='[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (cat --color=always {} || highlight -O ansi -l {} || cat {}) 2> /dev/null | head -500'
+export FZF_COMPLETION_TRIGGER='\'
+# Add wisely, as too many plugins slow down shell startup.
+#
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+
+
+
+#------------theme
+zinit snippet OMZL::git.zsh
+# ZSH_THEME="lukerandall"
+# ## Zinit Setting
+# # Must Load OMZ Git library
+# zi snippet OMZL::git.zsh
+# # Load Git plugin from OMZ
+# zi snippet OMZP::git
+# zi cdclear -q # <- forget completions provided up to this moment
+# setopt promptsubst
+# # Load Prompt
+# zi snippet OMZT::lukerandall
+# #-------------------------theme
+
+# plugins=(
+#   git
+#   zsh-syntax-highlighting
+#   zsh-autosuggestions
+# )
+
+#source $ZSH/oh-my-zsh.sh
+
+# User configuration
+alias ja='joshuto'
+alias vim='lvim'
+alias vi='lvim'
+alias ra='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+alias oh='explorer.exe .' 
+alias zz='z -' 
+alias lg='lazygit' 
+alias ls='ls --color' 
+alias la='ls -al'
+
+
+
+# -----------------auto suggestions-
+
+(( ! ${+ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS} )) && {
+	typeset -ga ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS
+	ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS=(
+    vi-forward-blank-word-end
+    forward-word
+	)
+}
+
+function __smart_completion() {
+  if [ -n "$POSTDISPLAY" ]; then
+    zle autosuggest-accept
+  else
+    zle expand-or-complete
+  fi
+}
+
+zle -N __smart_completion
+bindkey '\t' __smart_completion
+bindkey "^l" vi-forward-blank-word-end
+
+function __smart_backward() {
+  if [ -n "$POSTDISPLAY" ]; then
+    zle autosuggest-clear
+  else
+    zle backward-delete-char
+  fi
+}
+
+zle -N __smart_backward
+bindkey '^H' __smart_backward
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export LD_LIBRARY_PATH=/home/akawcc/temp/
+export PYTHONPATH=/home/akawcc/RSFSRC/book/Recipes:$PYTHONPATH
+
+eval "$(zoxide init zsh)"
+export PYTHONPATH=/home/akawcc/RSFSRC/book/Recipes:$PYTHONPATH
+
+
+# __________________________  git info 
+# # PROMPT="%{$fg_bold[green]%}%n@%m%{$reset_color%} %{$fg_bold[blue]%}%2~%{$reset_color%} $(my_git_prompt_info)%{$reset_color%}%B»%b "
+# # PROMPT=$"%{$fg_bold[blue]%}%2~%{$reset_color%} $(my_git_prompt_info)%{$reset_color%}%B\n » %b"
+# # PROMPT="$(my_git_prompt_info)%{$reset_color%}%B » %b"
+# autoload -U colors && colors
+#
+#PROMPT=" %{$fg_bold[blue]%}%0~%{$reset_color%} $(git_prompt_info)%{$reset_color%}%B» %b"
+# PROMPT=" %{$fg_bold[blue]%}%0~%{$reset_color%}"
+#
+# RPS1="${return_code}"
+source $HOME/.config/lukerandall-theme.zsh
+
+
+
