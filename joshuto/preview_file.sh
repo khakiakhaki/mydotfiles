@@ -131,6 +131,11 @@ handle_extension() {
             mediainfo "${FILE_PATH}" && exit 0
             exiftool "${FILE_PATH}" && exit 0
             ;; # Continue with next handler on failure
+
+            ## mada file
+        rsf)
+            sfin "${FILE_PATH}" && exit 0
+
     esac
 }
 

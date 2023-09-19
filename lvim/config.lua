@@ -41,11 +41,11 @@ lvim.plugins = {
     "is0n/fm-nvim",
     cmd = "Ranger",
   },
-  {
-    event = "VeryLazy",
-    'mbbill/undotree',
-    cmd = { "UndotreeToggle", "UndotreeFocus", "UndotreeShow" },
-  },
+  -- {
+  --   event = "VeryLazy",
+  --   'mbbill/undotree',
+  --   cmd = { "UndotreeToggle", "UndotreeFocus", "UndotreeShow" },
+  -- },
   {
     "LintaoAmons/easy-commands.nvim",
     config = function()
@@ -57,7 +57,11 @@ lvim.plugins = {
       })
     end,
     cmd = 'RunSelectedAndOutputWithPrePostFix'
-  }
+  },
+  --   {
+  --     event="VeryLazy",
+  --     "github/copilot.vim",
+  --   }
 }
 
 lvim.keys.normal_mode["<leader>ra"] = "<CMD>Ranger<CR>"

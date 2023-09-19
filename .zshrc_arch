@@ -23,6 +23,7 @@ setopt HIST_VERIFY               # Don't execute immediately upon history expans
 setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 bindkey '^[[3~' delete-char
 
+#
 # Path to your oh-my-zsh installation.
 #
 export PATH=/home/akawcc/.local/bin:~/CWP/44R26/bin:$PATH
@@ -36,21 +37,27 @@ export CWPROOT=~/CWP/44R26
 # export CPLUS_INCLUDE_PATH=$C_INCLUDE_PATH
 
 
+# source ~/.config/fzf.zsh
+
 export fzf_preview_cmd='[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (cat --color=always {} || highlight -O ansi -l {} || cat {}) 2> /dev/null | head -500'
 export FZF_COMPLETION_TRIGGER='\'
 # Add wisely, as too many plugins slow down shell startup.
-#
 # zinit light zsh-users/zsh-syntax-highlighting
 
-zinit light zdharma-continuum/history-search-multi-word
 zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
+
+zinit ice depth=1
+# zinit light jeffreytse/zsh-vi-mode
 
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 #------------theme
 zinit snippet OMZL::git.zsh
+
+
+source $HOME/.config/lukerandall-theme.zsh
 # ZSH_THEME="lukerandall"
 # ## Zinit Setting
 # # Must Load OMZ Git library
@@ -82,8 +89,10 @@ alias lg='lazygit'
 alias ls='ls --color' 
 alias la='ls -al'
 
-
-
+autoload -Uz compinit
+compinit
+alias csvshow=' < $1  column -s, -t | less -#8 -N -S'
+alias csvshow='function _csvshow(){ column -s, -t < $1 | less -#2 -N -S }; _csvshow'
 # -----------------auto suggestions-
 
 (( ! ${+ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS} )) && {
@@ -117,8 +126,9 @@ function __smart_backward() {
 zle -N __smart_backward
 bindkey '^H' __smart_backward
 
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# fzf
+source /usr/share/fzf/completion.zsh
+source /usr/share/fzf/key-bindings.zsh
 
 export LD_LIBRARY_PATH=/home/akawcc/temp/
 export PYTHONPATH=/home/akawcc/RSFSRC/book/Recipes:$PYTHONPATH
@@ -137,7 +147,6 @@ export PYTHONPATH=/home/akawcc/RSFSRC/book/Recipes:$PYTHONPATH
 # PROMPT=" %{$fg_bold[blue]%}%0~%{$reset_color%}"
 #
 # RPS1="${return_code}"
-source $HOME/.config/lukerandall-theme.zsh
 
 
 
