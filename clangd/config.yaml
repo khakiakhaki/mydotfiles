@@ -2,7 +2,7 @@ If:
   PathMatch: .*\.cpp, .*\.cc
 
 CompileFlags:
-  Add: [-std=gnu++17,-I/home/atmosu/RSFROOT/include,-L/home/atmosu/RSFROOT/lib,-I/home/atmosu/temp/lapack-3.10.1/CBLAS/include]
+  Add: [-std=gnu++17,-I/home/akawcc/RSFROOT/include,-L/home/akawcc/RSFROOT/lib]
 
 ---
 
@@ -11,13 +11,6 @@ If:
   PathExclude: include/cumtb/
 
 CompileFlags:
-  Add: [-std=gnu17,-I/home/atmosu/RSFROOT/include,-L/home/atmosu/RSFROOT/lib,-I/home/atmosu/temp/lapack-3.10.1/CBLAS/include]
+  Add: [-std=gnu17,-I/home/akawcc/RSFROOT/include,-L/home/akawcc/RSFROOT/lib]
   Remove: [-W*]
----
 
-If:
-  PathMatch: .*vscan\.c
-  
-CompileFlags:
-  Add: [ -I/home/atmosu/RSFSRC/build/user/chenyk,../../build/user/chenyk/fint1.o ../../build/user/chenyk/extend.o ]
-  Remove: [-W*]

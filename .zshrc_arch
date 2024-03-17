@@ -21,26 +21,32 @@ setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history 
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
 setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
 setopt HIST_BEEP                 # Beep when accessing nonexistent history.
+## custom bind key
 bindkey '^[[3~' delete-char
+bindkey '^B' backward-word
+bindkey '^F' forward-word
 
 #
 # Path to your oh-my-zsh installation.
 #
-export PATH=/home/akawcc/.local/bin:~/CWP/44R26/bin:$PATH
+export PATH=/home/akawcc/.local/bin:~/CWP/bin:$PATH
 export PATH=/home/akawcc/RSFSRC/user/cumtb/build:~/CWP/44R26/bin:$PATH
-source /home/akawcc/RSFSRC/env.sh 
+source /home/akawcc/RSFSRC/env.sh
 
-export CWPROOT=~/CWP/44R26
+export CWPROOT=/home/akawcc/CWP
+export DEBUGINFOD_URLS="https://debuginfod.archlinux.org/"
 # export CBLASROOT=/home/akawcc/temp/lapack-3.10.1/CBLAS/include/
 # export LIBRARY_PATH=$LIBRARY_PATH:/home/akawcc/temp/lapack-3.10.1:/home/atmosu/RSFROOT/
 # export C_INCLUDE_PATH=$C_INCLUDE_PATH:/home/akawcc/temp/lapack-3.10.1/LAPACKE/include:/home/atmosu/temp/lapack-3.10.1/CBLAS/include:/home/atmosu/RSFROOT/include
 # export CPLUS_INCLUDE_PATH=$C_INCLUDE_PATH
 
-
 # source ~/.config/fzf.zsh
 
 export fzf_preview_cmd='[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (cat --color=always {} || highlight -O ansi -l {} || cat {}) 2> /dev/null | head -500'
 export FZF_COMPLETION_TRIGGER='\'
+# export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --delimiter='='"
+
+
 # Add wisely, as too many plugins slow down shell startup.
 # zinit light zsh-users/zsh-syntax-highlighting
 
@@ -83,16 +89,24 @@ alias jo='joshuto --output-file $HOME/.rangerdir;	LASTDIR=`cat $HOME/.rangerdir`
 alias vim='lvim'
 alias vi='lvim'
 alias ra='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
-alias oh='explorer.exe .' 
+alias oh='/mnt/c/Windows/explorer.exe .' 
 alias zz='z -' 
 alias lg='lazygit' 
 alias ls='ls --color' 
 alias la='ls -al'
+# alias hh='cd ..'
 
 autoload -Uz compinit
 compinit
-alias csvshow=' < $1  column -s, -t | less -#8 -N -S'
-alias csvshow='function _csvshow(){ column -s, -t < $1 | less -#2 -N -S }; _csvshow'
+function _csvshow(){
+  if [ $# -eq 0 ]; then
+    column -s, -t | less -#2 -N -S 
+  else
+    column -s, -t < $1 | less -#2 -N -S 
+  fi
+}
+
+alias csvshow='_csvshow'
 # -----------------auto suggestions-
 
 (( ! ${+ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS} )) && {
@@ -130,12 +144,16 @@ bindkey '^H' __smart_backward
 source /usr/share/fzf/completion.zsh
 source /usr/share/fzf/key-bindings.zsh
 
-export LD_LIBRARY_PATH=/home/akawcc/temp/
+if [[ -z "$LD_LIBRARY_PATH" ]]; then
+  export LD_LIBRARY_PATH=/home/akawcc/temp
+else
+  export LD_LIBRARY_PATH=/home/akawcc/temp:$LD_LIBRARY_PATH
+fi 
+
 export PYTHONPATH=/home/akawcc/RSFSRC/book/Recipes:$PYTHONPATH
 
 eval "$(zoxide init zsh)"
 export PYTHONPATH=/home/akawcc/RSFSRC/book/Recipes:$PYTHONPATH
-
 
 # __________________________  git info 
 # # PROMPT="%{$fg_bold[green]%}%n@%m%{$reset_color%} %{$fg_bold[blue]%}%2~%{$reset_color%} $(my_git_prompt_info)%{$reset_color%}%B»%b "
@@ -147,6 +165,3 @@ export PYTHONPATH=/home/akawcc/RSFSRC/book/Recipes:$PYTHONPATH
 # PROMPT=" %{$fg_bold[blue]%}%0~%{$reset_color%}"
 #
 # RPS1="${return_code}"
-
-
-

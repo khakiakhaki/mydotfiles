@@ -9,7 +9,13 @@ vim.opt.relativenumber = true
 
 vim.o.background = "dark"
 vim.g.tokyonight_style = "storm" -- day / night
+vim.api.nvim_command('autocmd BufNewFile,BufRead *{scons,Scons,SCons}* setfiletype python')
+
+-- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" })
+-- require("lvim.lsp.manager").setup("pyright", opts)
 local colorscheme = "tokyonight"
+
+
 
 local opt = {
   noremap = true,
@@ -78,3 +84,5 @@ lvim.keys.normal_mode["<A-m>"] = { "<CMD>NvimTreeToggle<CR>" }
 lvim.keys.normal_mode["<leader>ut"] = { "<CMD>UndotreeToggle<CR>" }
 -- require("plugins.alpha-nvim")
 require("plugins.fm-nvim")
+-- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" })
+-- require("lspconfig.pyright")

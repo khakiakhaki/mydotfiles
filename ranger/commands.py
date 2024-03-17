@@ -150,3 +150,5 @@ class extracthere(Command):
 
         obj.signal_bind('after', refresh)
         self.fm.loader.add(obj)
+
+
