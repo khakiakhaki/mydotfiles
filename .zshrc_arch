@@ -29,9 +29,10 @@ bindkey '^F' forward-word
 #
 # Path to your oh-my-zsh installation.
 #
-export PATH=/home/akawcc/.local/bin:~/CWP/bin:$PATH
-export PATH=/home/akawcc/RSFSRC/user/cumtb/build:~/CWP/44R26/bin:$PATH
+export PATH=$HOME/.local/bin:~/CWP/bin:$PATH
 source /home/akawcc/RSFSRC/env.sh
+export PATH=$RSFSRC/user/cumtb/build:~/CWP/44R26/bin:$PATH
+export DATAPATH=./datarsf/
 
 export CWPROOT=/home/akawcc/CWP
 export DEBUGINFOD_URLS="https://debuginfod.archlinux.org/"
@@ -95,6 +96,7 @@ alias lg='lazygit'
 alias ls='ls --color' 
 alias la='ls -al'
 # alias hh='cd ..'
+# alias refresh-tmux="eval \$(tmux showenv -s | grep -E '^(SSH|DISPLAY)')"
 
 autoload -Uz compinit
 compinit
@@ -145,15 +147,15 @@ source /usr/share/fzf/completion.zsh
 source /usr/share/fzf/key-bindings.zsh
 
 if [[ -z "$LD_LIBRARY_PATH" ]]; then
-  export LD_LIBRARY_PATH=/home/akawcc/temp
+  export LD_LIBRARY_PATH=$HOME/temp
 else
-  export LD_LIBRARY_PATH=/home/akawcc/temp:$LD_LIBRARY_PATH
+  export LD_LIBRARY_PATH=$HOME/temp:$LD_LIBRARY_PATH
 fi 
 
-export PYTHONPATH=/home/akawcc/RSFSRC/book/Recipes:$PYTHONPATH
+export PYTHONPATH=$RSFSRC/book/Recipes:$PYTHONPATH
 
 eval "$(zoxide init zsh)"
-export PYTHONPATH=/home/akawcc/RSFSRC/book/Recipes:$PYTHONPATH
+export PYTHONPATH=$RSFSRC/book/Recipes:$PYTHONPATH
 
 # __________________________  git info 
 # # PROMPT="%{$fg_bold[green]%}%n@%m%{$reset_color%} %{$fg_bold[blue]%}%2~%{$reset_color%} $(my_git_prompt_info)%{$reset_color%}%B»%b "

@@ -6,3 +6,6 @@
 /ranger/plugins/__pycache__
 gh/hosts.yml
 lazygit/state.yml
+/btop
+/neofetch
+
