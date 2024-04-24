@@ -64,6 +64,12 @@ lvim.plugins = {
     end,
     cmd = 'RunSelectedAndOutputWithPrePostFix'
   },
+  {
+    -- lazy = true,
+    "let-def/texpresso.vim",
+    -- cmd = "TeXpresso",
+
+  },
   --   {
   --     event="VeryLazy",
   --     "github/copilot.vim",

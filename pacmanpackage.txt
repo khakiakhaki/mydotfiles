@@ -1,5 +1,6 @@
 arch-install-scripts
 base
+base-devel
 bat
 btop
 cairo
@@ -13,9 +14,12 @@ gcc-fortran
 gdb
 git
 gitui
+gumbo-parser
+jbig2dec
 lapack
 lazygit
 lf
+libmupdf
 libpng
 libtiff
 libxaw
@@ -26,6 +30,7 @@ neofetch
 neovim
 nodejs
 npm
+openjpeg2
 openmotif
 openmpi
 python-ipykernel
@@ -34,7 +39,10 @@ python-pandas
 python-scipy
 python-setuptools
 ranger
+re2c
 ripgrep
+rustup
+sdl2
 sudo
 swig
 tk
@@ -43,6 +51,8 @@ ttf-liberation
 unzip
 valgrind
 vim
+vulkan-icd-loader
+vulkan-tools
 wget
 zoxide
 zsh
