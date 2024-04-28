@@ -90,7 +90,11 @@ alias jo='joshuto --output-file $HOME/.rangerdir;	LASTDIR=`cat $HOME/.rangerdir`
 alias vim='lvim'
 alias vi='lvim'
 alias ra='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
-alias oh='/mnt/c/Windows/explorer.exe .' 
+# alias oh='/mnt/c/Windows/explorer.exe .' 
+if [[ $(eval "uname -a") =~ "WSL2" ]];then
+  # echo fomer  contain $wsl2"
+  alias oh='/mnt/c/Windows/explorer.exe .' 
+fi
 alias zz='z -' 
 alias lg='lazygit' 
 alias ls='ls --color' 
