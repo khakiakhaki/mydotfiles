@@ -68,13 +68,32 @@ lvim.plugins = {
     -- lazy = true,
     "let-def/texpresso.vim",
     -- cmd = "TeXpresso",
-
   },
+  {
+    "",
+    dev = true,
+    dir = "/home/akawcc/.config/lvim/lua/custom/masscode-nvim",
+    name = "masscode",
+    event = 'VeryLazy',
+    url = "",
+    config = function()
+      require("masscode-nvim").setup(
+        {
+          ip_address = '192.168.1.126',
+        })
+    end,
+    -- lazy = false,
+    cmd = { 'MasscodeSearch', 'MasscodeCreate', 'MasscodeSetIp' }
+  }
+
   --   {
   --     event="VeryLazy",
   --     "github/copilot.vim",
   --   }
+  --
 }
+
+require("plugins.fm-nvim")
 
 lvim.keys.normal_mode["<leader>ra"] = "<CMD>Ranger<CR>"
 ---------------------
@@ -88,7 +107,8 @@ lvim.keys.normal_mode["<leader>fo"] = { "<CMD>Telescope oldfiles<CR>" }
 lvim.keys.normal_mode["<leader>tr"] = { "<CMD>TroubleToggle<CR>" }
 lvim.keys.normal_mode["<A-m>"] = { "<CMD>NvimTreeToggle<CR>" }
 lvim.keys.normal_mode["<leader>ut"] = { "<CMD>UndotreeToggle<CR>" }
+
 -- require("plugins.alpha-nvim")
-require("plugins.fm-nvim")
+
 -- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" })
 -- require("lspconfig.pyright")
