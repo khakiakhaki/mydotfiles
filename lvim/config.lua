@@ -73,9 +73,8 @@ lvim.plugins = {
     "",
     dev = true,
     dir = "/home/akawcc/.config/lvim/lua/custom/masscode-nvim",
-    name = "masscode",
+    name = "masscode.nvim",
     event = 'VeryLazy',
-    url = "",
     config = function()
       require("masscode-nvim").setup(
         {
@@ -83,7 +82,8 @@ lvim.plugins = {
         })
     end,
     -- lazy = false,
-    cmd = { 'MasscodeSearch', 'MasscodeCreate', 'MasscodeSetIp' }
+    cmd = { 'MasscodeSearch', 'MasscodeCreate', 'MasscodeSetIp' },
+    dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" }
   }
 
   --   {

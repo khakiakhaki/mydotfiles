@@ -5,19 +5,15 @@ local finders = require('telescope.finders')
 local previewers = require('telescope.previewers')
 local conf = require('telescope.config').values
 
-local log_file = "/home/akawcc/.config/lvim/lua/plugins/log.txt"
-
 -- set IP masscode
--- ip (win i use vim in wsl and masscode is in windows)
+-- ip ( use neovim in wsl and masscode is in windows)
 local config = {
   ip_address = "localhsot",
   mappings = {
     snippetcreate = "<leader>mc",
     snippetsearch = "<leader>ms",
-    ESC = "<ESC>",
   }
 }
-
 
 function M.set_ip(new_ip)
   config.ip_address = new_ip
@@ -97,44 +93,56 @@ function M.search_snippet()
   end)
 end
 
+local function get_visual_selection()
+  -- from https://www.reddit.com/r/neovim/comments/oo97pq/how_to_get_the_visual_selection_range/
+  --
+  -- Yank current visual selection into the 'v' register
+  -- Note that this makes no effort to preserve this register
+  vim.cmd('noau normal! "vy"')
+  return vim.fn.getreg('v')
+end
+
+local function get_visual_selection_range()
+  -- from https://github.com/nvim-telescope/telescope.nvim/pull/494
+  -- return start_line,col end line_col
+  local line_v, column_v = unpack(vim.fn.getpos("v"), 2, 3)
+  local line_cur, column_cur = unpack(vim.api.nvim_win_get_cursor(0))
+  column_cur = column_cur + 1
+  -- backwards visual selection
+  if line_v > line_cur or (line_v == line_cur and column_cur < column_v) then
+    return line_cur, column_cur, line_v, column_v
+  end
+  return line_v, column_v, line_cur, column_cur
+end
+
+local function get_selection(bufnr)
+  local start_line, _, end_line, _ = get_visual_selection_range()
+  local lines = vim.api.nvim_buf_get_lines(bufnr, start_line - 1, end_line, false)
+  return table.concat(lines, '\n')
+end
+
 function M.create_snippet()
-  -- 获取当前缓冲区和窗口
   local bufnr = vim.api.nvim_get_current_buf()
-  local winid = vim.api.nvim_get_current_win()
+  local selected_text = get_selection(bufnr)
 
-  -- 获取选中的文本
-  local start_pos = vim.fn.getpos("'<")
-  local end_pos = vim.fn.getpos("'>")
+  -- local selected_text = get_visual_selection()
 
-  local logfile = io.open(log_file, "a")
-
-  logfile:write(string.format("start: %s\n", vim.json.encode(start_pos)))
-  logfile:write(string.format("end  : %s\n", vim.json.encode(end_pos)))
-  logfile.close()
-
-  -- 检查是否有选中的文本
-  if start_pos[2] == end_pos[2] and start_pos[3] == end_pos[3] then
-    print("No text selected.")
-    return
+  if selected_text then
+    if selected_text == "" then
+      print("not text was selected")
+      return
+    end
   end
 
-  vim.cmd("yank")
-  local lines = vim.api.nvim_buf_get_lines(bufnr, start_pos[2] - 1, end_pos[2], false)
-  local selected_text = table.concat(lines, '\n')
-
-  -- 获取当前文件类型
+  -- get current file type
   local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
-
-  -- 使用 vim.fn.input 获取用户输入
   local snippet_name = vim.fn.input('Snippet Name: ')
-
-  -- 检查输入是否为空
   if snippet_name == '' then
     print("Snippet abbortion.")
     return
   end
 
-  -- 发送 POST 请求
+  -- use curl to post to masscode server
   local url = 'http://' .. config.ip_address .. ':3033/snippets/create'
   local body = vim.fn.json_encode({
     name = snippet_name,
@@ -147,11 +155,6 @@ function M.create_snippet()
     }
   })
 
-  local logfile = io.open(log_file, "a")
-  logfile:write(string.format("URL: %s\nBody: %s\n", url, body))
-  logfile:write("name" .. snippet_name)
-  logfile.close()
-
   Job:new({
     command = 'curl',
     args = {
@@ -163,7 +166,7 @@ function M.create_snippet()
     on_exit = function(j, return_val)
       local response_code = tonumber(j:result()[1])
       if response_code == 200 then
-        print('Snippet created successfully!')
+        print('Snippet ' .. name .. ' created successfully!')
       else
         print('Failed to create snippet: ' .. (response_code or 'unknown error'))
       end
@@ -179,14 +182,12 @@ vim.api.nvim_create_user_command('MasscodeCreate', M.create_snippet, {})
 vim.api.nvim_create_user_command('MasscodeSearch', M.search_snippet, {})
 vim.api.nvim_create_user_command('MasscodeShowIp', M.show_ip, {})
 vim.api.nvim_create_user_command('MasscodeSetIp', function(opts)
-  M.set_ip(opts.args, opts.bang)
-end, { nargs = 1, bang = true })
+  M.set_ip(opts.args)
+end, { nargs = 1 })
 
 
 function M.setup(user_options)
   config = vim.tbl_deep_extend("force", config, user_options)
-  -- lvim.keys.visual_mode["<leader>ms"] = { "<CMD>MasscodeSearch<CR>" }
-  -- lvim.keys.visual_mode["<leader>mc"] = { "<CMD>MasscodeCreate<CR>" }
   vim.api.nvim_set_keymap(
     "n",
     config.mappings.snippetsearch,
@@ -205,18 +206,4 @@ return M
 -- useage:
 -- :MasscodeAssistantSearch
 -- :SetMasscodeIP 192.168.1.1
--- :SetMasscodeIP! 192.168.1.1  (no print)
---
 -- install:
--- -- add folowing code in your init file
--- -- could set ip of masscode especially
--- -- wsl use vim but masscode on windows
--- --
--- require("plugins.masscode")
--- local new_ip = '192.168.1.126'
--- -- set masscode ip when start
--- vim.api.nvim_create_autocmd('VimEnter', {
---   callback = function()
---     vim.cmd('SetMasscodeIP ' .. new_ip)
--- end,
--- })
