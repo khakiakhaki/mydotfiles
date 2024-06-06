@@ -33,6 +33,7 @@ export PATH=$HOME/.local/bin:~/CWP/bin:$PATH
 source /home/akawcc/RSFSRC/env.sh
 export PATH=$RSFSRC/user/cumtb/build:~/CWP/44R26/bin:$PATH
 export DATAPATH=./datarsf/
+export VISUAL=nvim
 
 export CWPROOT=/home/akawcc/CWP
 export DEBUGINFOD_URLS="https://debuginfod.archlinux.org/"
@@ -87,8 +88,7 @@ source $HOME/.config/lukerandall-theme.zsh
 
 # User configuration
 alias jo='joshuto --output-file $HOME/.rangerdir;	LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"';
-alias vim='lvim'
-alias vi='lvim'
+alias vim='nvim'
 alias ra='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 # alias oh='/mnt/c/Windows/explorer.exe .' 
 if [[ $(eval "uname -a") =~ "WSL2" ]];then

@@ -70,10 +70,9 @@ lvim.plugins = {
     -- cmd = "TeXpresso",
   },
   {
-    "",
-    dev = true,
-    dir = "/home/akawcc/.config/lvim/lua/custom/masscode-nvim",
-    name = "masscode.nvim",
+    -- dev = true,
+    dir = "~/.config/lvim/lua/custom/masscode-nvim",
+    name = "masscode-nvim",
     event = 'VeryLazy',
     config = function()
       require("masscode-nvim").setup(
@@ -81,7 +80,7 @@ lvim.plugins = {
           ip_address = '192.168.1.126',
         })
     end,
-    -- lazy = false,
+    lazy = false,
     cmd = { 'MasscodeSearch', 'MasscodeCreate', 'MasscodeSetIp' },
     dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" }
   }
