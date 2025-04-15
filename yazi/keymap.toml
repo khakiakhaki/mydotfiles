@@ -1,0 +1,15 @@
+[manager]
+prepend_keymap = [
+	{ on = ["g","M"], run = "cd /mnt", desc = "Cd to /mnt" },
+	{ on = "x", run = "cd /mnt", desc = "Cd to /mnt" },
+  { on = ["d","d"], run = "yank --cut",desc = "cut files" },
+  { on = ["d","D"], run = "remove --permanently",desc = "Permanently delete " },
+  { on = ["d","T"], run = "remove", desc = "Trash selected files" },
+  { on = "l", run = "plugin smart-enter", desc = "Enter directory / open file" },
+  { on = ["z","h"],         run = "hidden toggle",               desc = "Toggle the visibility of hidden files" },
+	{ on = ["z","f"],         run = "plugin fzf",                  desc = "Jump to a file/directory via fzf" },
+	{ on = ["z","z"],         run = "plugin zoxide",               desc = "Jump to a directory via zoxide" },
+
+]
+
+

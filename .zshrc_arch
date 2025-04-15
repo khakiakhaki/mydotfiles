@@ -87,9 +87,11 @@ source $HOME/.config/lukerandall-theme.zsh
 #source $ZSH/oh-my-zsh.sh
 
 # User configuration
-alias jo='joshuto --output-file $HOME/.rangerdir;	LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"';
 alias vim='nvim'
-alias ra='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+# alias ra='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+alias ra='yazi "$@" --cwd-file=$HOME/.rangerdir; cd `cat $HOME/.rangerdir`'
+
+
 # alias oh='/mnt/c/Windows/explorer.exe .' 
 if [[ $(eval "uname -a") =~ "WSL2" ]];then
   # echo fomer  contain $wsl2"
@@ -157,10 +159,11 @@ else
   export LD_LIBRARY_PATH=$HOME/temp:$LD_LIBRARY_PATH
 fi 
 
-export PYTHONPATH=$RSFSRC/book/Recipes:$PYTHONPATH
-
 eval "$(zoxide init zsh)"
-export PYTHONPATH=$RSFSRC/book/Recipes:$PYTHONPATH
+
+export PYTHONPATH=$RSFSRC/book/Recipes:$HOME/.uv:$PYTHONPATH
+
+
 
 # __________________________  git info 
 # # PROMPT="%{$fg_bold[green]%}%n@%m%{$reset_color%} %{$fg_bold[blue]%}%2~%{$reset_color%} $(my_git_prompt_info)%{$reset_color%}%B»%b "
@@ -173,24 +176,28 @@ export PYTHONPATH=$RSFSRC/book/Recipes:$PYTHONPATH
 #
 # RPS1="${return_code}"
 
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-#
-__conda_setup="$('/home/akawcc/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/akawcc/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/akawcc/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/opt/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/akawcc/miniconda3/bin:$PATH"
+        export PATH="/opt/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-#
+
 #  if mada venv exist , activate it 
 if conda env list | grep -q 'mada'; then
     conda activate mada
 fi
+## use conda manage package enviroment
 
+#############################################
+# Codon compiler path (added by install script)
+export PATH=/home/akawcc/.codon/bin:$PATH
