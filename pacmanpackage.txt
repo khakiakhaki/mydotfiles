@@ -13,7 +13,6 @@ gcc
 gcc-fortran
 gdb
 git
-gitui
 gumbo-parser
 jbig2dec
 lapack
@@ -25,7 +24,6 @@ libtiff
 libxaw
 make
 man-db
-nano
 neofetch
 neovim
 nodejs
@@ -35,10 +33,9 @@ openmotif
 openmpi
 python-ipykernel
 python-numpy
-python-pandas
-python-scipy
 python-setuptools
 ranger
+yazi
 re2c
 ripgrep
 rustup
@@ -50,8 +47,6 @@ tmux
 ttf-liberation
 unzip
 valgrind
-vim
-vulkan-icd-loader
 vulkan-tools
 wget
 zoxide

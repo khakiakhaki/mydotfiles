@@ -3,9 +3,13 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 source "${ZINIT_HOME}/zinit.zsh"
 
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_STATE_HOME=$HOME/.local/state
+export XDG_CACHE_HOME=$HOME/.cache
 
 # history 
-HISTFILE="$HOME/.zsh_history"
+HISTFILE="$HOME/.config/zsh/zsh_histoy"
 HISTSIZE=10000000
 SAVEHIST=10000000
 setopt BANG_HIST                 # Treat the '!' character specially during expansion.
@@ -34,6 +38,7 @@ source /home/akawcc/RSFSRC/env.sh
 export PATH=$RSFSRC/user/cumtb/build:~/CWP/44R26/bin:$PATH
 export DATAPATH=./datarsf/
 export VISUAL=nvim
+export EDITOR=nvim
 
 export CWPROOT=/home/akawcc/CWP
 export DEBUGINFOD_URLS="https://debuginfod.archlinux.org/"
@@ -88,8 +93,8 @@ source $HOME/.config/lukerandall-theme.zsh
 
 # User configuration
 alias vim='nvim'
-# alias ra='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
-alias ra='yazi "$@" --cwd-file=$HOME/.rangerdir; cd `cat $HOME/.rangerdir`'
+alias ran='ranger --choosedir=$XDG_CACHE_HOME/.rangerdir; cd `cat $XDG_CACHE_HOME/.rangerdir`'
+alias ra='yazi "$@" --cwd-file=$XDG_CACHE_HOME/.rangerdir; cd `cat  $XDG_CACHE_HOME/.rangerdir`'
 
 
 # alias oh='/mnt/c/Windows/explorer.exe .' 
@@ -137,6 +142,11 @@ function __smart_completion() {
 zle -N __smart_completion
 bindkey '\t' __smart_completion
 bindkey "^l" vi-forward-blank-word-end
+bindkey '^a' beginning-of-line
+bindkey '^e' end-of-line
+bindkey "^[." insert-last-word
+
+
 
 function __smart_backward() {
   if [ -n "$POSTDISPLAY" ]; then
@@ -201,3 +211,6 @@ fi
 #############################################
 # Codon compiler path (added by install script)
 export PATH=/home/akawcc/.codon/bin:$PATH
+# >>> xmake >>>
+test -f "/home/akawcc/.xmake/profile" && source "/home/akawcc/.xmake/profile"
+# <<< xmake <<<
