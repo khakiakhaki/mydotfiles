@@ -1,6 +1,7 @@
-[manager]
+[mgr]
 prepend_keymap = [
 	{ on = ["g","M"], run = "cd /mnt", desc = "Cd to /mnt" },
+	{ on = ["g","r"], run = "cd /", desc = "Cd to root" },
 	{ on = "x", run = "cd /mnt", desc = "Cd to /mnt" },
   { on = ["d","d"], run = "yank --cut",desc = "cut files" },
   { on = ["d","D"], run = "remove --permanently",desc = "Permanently delete " },
