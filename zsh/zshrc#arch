@@ -33,9 +33,8 @@ bindkey '^F' forward-word
 #
 # Path to your oh-my-zsh installation.
 #
-export PATH=$HOME/.local/bin:~/CWP/bin:$PATH
 source /home/akawcc/RSFSRC/env.sh
-export PATH=$RSFSRC/user/cumtb/build:~/CWP/44R26/bin:$PATH
+export PATH=$RSFSRC/user/cumtb/build:~/CWP/44R26/bin:$HOME/.local/bin:$PATH
 export DATAPATH=./datarsf/
 export VISUAL=nvim
 export EDITOR=nvim
@@ -67,10 +66,12 @@ zinit ice depth=1
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 #------------theme
-zinit snippet OMZL::git.zsh
+# zinit snippet OMZL::git.zsh
+# source $XDG_CONFIG_HOME/zsh/lukerandall-theme.zsh
 
+source $XDG_CONFIG_HOME/zsh/customgitinfo.zsh
 
-source $HOME/.config/lukerandall-theme.zsh
+######################### oh my zsh style
 # ZSH_THEME="lukerandall"
 # ## Zinit Setting
 # # Must Load OMZ Git library
@@ -173,8 +174,6 @@ eval "$(zoxide init zsh)"
 
 export PYTHONPATH=$RSFSRC/book/Recipes:$HOME/.uv:$PYTHONPATH
 
-
-
 # __________________________  git info 
 # # PROMPT="%{$fg_bold[green]%}%n@%m%{$reset_color%} %{$fg_bold[blue]%}%2~%{$reset_color%} $(my_git_prompt_info)%{$reset_color%}%B»%b "
 # # PROMPT=$"%{$fg_bold[blue]%}%2~%{$reset_color%} $(my_git_prompt_info)%{$reset_color%}%B\n » %b"
@@ -189,28 +188,48 @@ export PYTHONPATH=$RSFSRC/book/Recipes:$HOME/.uv:$PYTHONPATH
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
+# __conda_setup="$('/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
+#         . "/opt/miniconda3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/opt/miniconda3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
 # <<< conda initialize <<<
 
+## custom activate 
 #  if mada venv exist , activate it 
-if conda env list | grep -q 'mada'; then
-    conda activate mada
-fi
+# if conda env list | grep -q 'mada'; then
+#     conda activate mada
+# fi
+#
 ## use conda manage package enviroment
+
+# >>> mamba initialize >>>
+# !! Contents within this block are managed by 'micromamba shell init' !!
+export MAMBA_EXE='/usr/bin/micromamba';
+export MAMBA_ROOT_PREFIX='/home/akawcc/.local/share/mamba';
+__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__mamba_setup"
+else
+    alias micromamba="$MAMBA_EXE"  # Fallback on help from micromamba activate
+fi
+unset __mamba_setup
+# <<< mamba initialize <<<
 
 #############################################
 # Codon compiler path (added by install script)
-export PATH=/home/akawcc/.codon/bin:$PATH
+export PATH=$CONDA_PREFIX/bin:/home/akawcc/.codon/bin:$PATH
 # >>> xmake >>>
 test -f "/home/akawcc/.xmake/profile" && source "/home/akawcc/.xmake/profile"
-# <<< xmake <<<
+# <<< xmake <<<#
+# uv
+export UV_DEFAULT_INDEX="https://mirrors.aliyun.com/pypi/simple"
+
+
+

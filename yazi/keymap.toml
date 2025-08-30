@@ -1,6 +1,8 @@
-[manager]
+[mgr]
 prepend_keymap = [
 	{ on = ["g","M"], run = "cd /mnt", desc = "Cd to /mnt" },
+	{ on = ["g","d"], run = "cd /mnt/c/users/atmos/Downloads", desc = "Cd to windows download" },
+	{ on = ["g","r"], run = "cd /", desc = "Cd to root" },
 	{ on = "x", run = "cd /mnt", desc = "Cd to /mnt" },
   { on = ["d","d"], run = "yank --cut",desc = "cut files" },
   { on = ["d","D"], run = "remove --permanently",desc = "Permanently delete " },
@@ -14,6 +16,19 @@ prepend_keymap = [
 
 	{ on = "<PageUp>"    , run = "seek -10", desc = "Seek up 5 units in the preview" },
 	{ on = "<PageDown>"  , run = "seek 10",  desc = "Seek down 5 units in the preview" },
+	{ on = "<C-u>"       , run = "seek -10", desc = "Seek up 5 units in the preview" },
+	{ on = "<C-d>"       , run = "seek 10",  desc = "Seek down 5 units in the preview" },
+	{ on = "<C-k>"       , run = "seek -10", desc = "Seek up 5 units in the preview" },
+	{ on = "<C-j>"       , run = "seek 10",  desc = "Seek down 5 units in the preview" },
+
+	{ on = "i"           ,block=true, run = 'plugin toggle-pane max-preview',  desc = "Maximize or resotre the preview pane " },
+
+  { on = ["t","c"], run = "tab_create --current", desc = "Create a new tab with CWD" },
+	{ on = ["t","["], run = "tab_switch -1 --relative", desc = "Switch to previous tab" },
+	{ on = ["t","]"], run = "tab_switch 1 --relative",  desc = "Switch to next tab" },
+
+	{ on = ["t","{"], run = "tab_swap -1", desc = "Swap current tab with previous tab" },
+	{ on = ["t","}"], run = "tab_swap 1",  desc = "Swap current tab with next tab" },
 ]
 
 

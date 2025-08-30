@@ -24,11 +24,11 @@ ZSH_THEME_GIT_PROMPT_RENAMED="~"
 ZSH_THEME_GIT_PROMPT_DELETED="!"
 ZSH_THEME_GIT_PROMPT_UNMERGED="?"
 
-function preexec() {
+function pretimer() {
   timer=${timer:-$SECONDS}
 }
 
-function precmd() {
+function showtime() {
   if [ $timer ]; then
     timer_show=$(($SECONDS - $timer))
     if [[ $timer_show -ge $min_show_time ]]; then
@@ -41,7 +41,7 @@ function precmd() {
 }
 
 autoload -Uz add-zsh-hook
-add-zsh-hook preexec preexec
-add-zsh-hook precmd precmd
+add-zsh-hook preexec pretimer
+add-zsh-hook precmd showtime
 
 PROMPT=" %{$fg_bold[blue]%}%1~%{$reset_color%} $(my_git_prompt_info)%{$reset_color%}%b» %b"

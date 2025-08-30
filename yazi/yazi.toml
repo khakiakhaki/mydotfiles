@@ -1,14 +1,14 @@
 # A TOML linter such as https://taplo.tamasfe.dev/ can use this schema to validate your config.
 # If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
 
-[manager]
+[mgr]
 ratio          = [ 1, 4, 3 ]
 sort_by        = "alphabetical"
 sort_sensitive = false
 sort_reverse 	 = false
 sort_dir_first = true
 sort_translit  = false
-linemode       = "none"
+linemode       = "size"
 show_hidden    = false
 show_symlink   = true
 scrolloff      = 10
@@ -21,10 +21,10 @@ tab_size        = 2
 max_width       = 600
 max_height      = 900
 cache_dir       = ""
-image_delay     = 30
-image_filter    = "triangle"
+image_delay     = 100
+image_filter    = "nearest"
 image_quality   = 50
-sixel_fraction  = 15
+sixel_fraction  = 19
 ueberzug_scale  = 1
 ueberzug_offset = [ 0, 0, 0, 0 ]
 
@@ -35,7 +35,7 @@ edit = [
 ]
 open = [
 	# { run = 'xdg-open "$1"',                desc = "Open", for = "linux" },
-	{ run = '/mnt/c/Windows/explorer.exe "$(wslpath -w $(realpath $1) )"', orphan=true, desc = "Open here", for = "linux" },
+	# { run = '/mnt/c/Windows/explorer.exe "$(wslpath -w $(realpath $1) )"', orphan=true, desc = "Open here", for = "linux" },
 	{ run = 'cd "$1"',                      desc = "cd dir", for = "linux" },
 	{ run = 'open "$@"',                    desc = "Open", for = "macos" },
 	{ run = 'start "" "%1"', orphan = true, desc = "Open", for = "windows" },
@@ -101,7 +101,10 @@ suppress_preload = false
 fetchers = [
 	# Mimetype
 	{ id = "mime", name = "*", run = "mime", prio = "high" },
+
 ]
+
+
 spotters = [
 	{ name = "*/", run = "folder" },
 	# Code
@@ -138,6 +141,7 @@ preloaders = [
 	{ mime = "application/ms-opentype", run = "font" },
 ]
 previewers = [
+  # custom
 	{ name = "*/", run = "folder", sync = true },
 	# Code
 	{ mime = "text/*", run = "code" },
@@ -166,7 +170,25 @@ previewers = [
 	{ mime = "inode/empty", run = "empty" },
 	# Fallback
 	{ name = "*", run = "file" },
+
 ]
+
+[[plugin.prepend_previewers]]
+name = "*.csv"
+run  = 'piper -- bat -p --color=always "$1"'
+
+[[plugin.prepend_previewers]]
+name = "*.ipynb"
+run  = 'piper -- nbread "$1" --paging never'
+
+# [[plugin.prepend_previewers]]
+# name = "*.vpl"
+# run  = 'vpl'
+
+# [[plugin.prepend_previewers]]
+# name = "*.ipynb"
+# run = "nbpreview" 
+
 
 [input]
 cursor_blink = false
