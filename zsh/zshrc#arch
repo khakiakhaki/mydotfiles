@@ -34,8 +34,9 @@ bindkey '^F' forward-word
 # Path to your oh-my-zsh installation.
 #
 source /home/akawcc/RSFSRC/env.sh
-export PATH=$RSFSRC/user/cumtb/build:~/CWP/44R26/bin:$HOME/.local/bin:$PATH
+export PATH=$HOME/bin:$RSFSRC/user/cumtb/build:~/CWP/bin:$HOME/.local/bin:$PATH
 export DATAPATH=./datarsf/
+export TMPDATAPATH=/tmp/rsf_tmp/
 export VISUAL=nvim
 export EDITOR=nvim
 
@@ -52,6 +53,14 @@ export fzf_preview_cmd='[[ $(file --mime {}) =~ binary ]] && echo {} is a binary
 export FZF_COMPLETION_TRIGGER='\'
 # export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --delimiter='='"
 
+## proxy 
+proxy_on(){
+  export http_proxy="http://127.0.0.1:54099"
+  export https_proxy="http://127.0.0.1:54099"
+  export all_proxy="http://127.0.0.1:54099"
+  echo "Proxy ON (via SSH tunnel)" 
+
+}
 
 # Add wisely, as too many plugins slow down shell startup.
 # zinit light zsh-users/zsh-syntax-highlighting
@@ -95,19 +104,22 @@ source $XDG_CONFIG_HOME/zsh/customgitinfo.zsh
 # User configuration
 alias vim='nvim'
 alias ran='ranger --choosedir=$XDG_CACHE_HOME/.rangerdir; cd `cat $XDG_CACHE_HOME/.rangerdir`'
-alias ra='yazi "$@" --cwd-file=$XDG_CACHE_HOME/.rangerdir; cd `cat  $XDG_CACHE_HOME/.rangerdir`'
+alias ra='yazi "$@" --cwd-file=$XDG_CACHE_HOME/.rangerdir; cd "`cat  $XDG_CACHE_HOME/.rangerdir`"'
 
 
 # alias oh='/mnt/c/Windows/explorer.exe .' 
-if [[ $(eval "uname -a") =~ "WSL2" ]];then
+if [[ $(uname -a) =~ "WSL2" ]];then
   # echo fomer  contain $wsl2"
   alias oh='/mnt/c/Windows/explorer.exe .' 
+  export HOST_IP="192.168.1.126"
+  export http_proxy="http://${HOST_IP}:54099"
+  export https_proxy="http://${HOST_IP}:54099"
 fi
+
 alias zz='z -' 
 alias lg='lazygit' 
 alias ls='ls --color' 
 alias la='ls -alh'
-alias hv='/mnt/c/applicationc/Honeyview/Honeyview.exe'
 # alias hh='cd ..'
 # alias refresh-tmux="eval \$(tmux showenv -s | grep -E '^(SSH|DISPLAY)')"
 
@@ -220,16 +232,32 @@ else
     alias micromamba="$MAMBA_EXE"  # Fallback on help from micromamba activate
 fi
 unset __mamba_setup
+alias conda="$MAMBA_EXE"
 # <<< mamba initialize <<<
+if micromamba env list | grep -q 'mada'; then
+  micromamba activate mada
+fi
+alias monda=micromamba 
+
 
 #############################################
 # Codon compiler path (added by install script)
-export PATH=$CONDA_PREFIX/bin:/home/akawcc/.codon/bin:$PATH
-# >>> xmake >>>
-test -f "/home/akawcc/.xmake/profile" && source "/home/akawcc/.xmake/profile"
-# <<< xmake <<<#
+# export PATH=$CONDA_PREFIX/bin:/home/akawcc/.codon/bin:$PATH
+
 # uv
 export UV_DEFAULT_INDEX="https://mirrors.aliyun.com/pypi/simple"
+export CXX=/usr/bin/g++
 
+## nvcc 
+export CUDA_PATH=/opt/bin
+export PATH=$PATH:/opt/cuda/bin:/opt/cuda/nsight_compute:/opt/cuda/nsight_computes/bin
+export NVCC_CCBIN='/usr/bin/g++'
 
+# Proxy settings for WSL to connect to Windows host
+# export HOST_IP=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}')
 
+#export all_proxy="socks5://${HOST_IP}:7897"
+source $XDG_CONFIG_HOME/private/aikey.zsh
+
+export PATH=~/.npm/global/bin:$PATH
+# [[-n "$SSH_CONNECTION" ]] && proxy_on
